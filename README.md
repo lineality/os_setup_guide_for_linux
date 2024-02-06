@@ -11,7 +11,7 @@ Cheatsheet:
 ```
 $ dnf clean all
 $ time dnf makecache
-	```
+```
 Snap Note: May have to do a first sudo dnf update and restart for snap to work
 
 ## Primary Overall Steps:
