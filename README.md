@@ -1,26 +1,26 @@
-# os_setup_guide_for_linux
-
-Quick OS Setup Software Setup for new OS install: Fedora, Ubuntu, Alpine
+# Quick OS Setup Software Setup for new OS install: Fedora, Ubuntu, Alpine
 
 IDE config https://docs.google.com/document/d/1dZJI20D7uIknT1pdlTSmlHH1WPYdVhs2PSUyH1qdnUo/ 
 Fedora Release Schedules: https://fedorapeople.org/groups/schedule/ 
 dnf guide: https://www.rootusers.com/25-useful-dnf-command-examples-for-package-management-in-linux/ 
+       https://linuxize.com/post/cp-command-in-linux/ 
 ssh https://docs.github.com/en/authentication/connecting-to-github-with-ssh   
 gpg https://docs.github.com/en/authentication/managing-commit-signature-verification  
 gpg google: https://www.google.com/linuxrepositories/ 
 Cheatsheet:
+```
 $ dnf clean all
 $ time dnf makecache
-
+	```
 Snap Note: May have to do a first sudo dnf update and restart for snap to work
 
-Primary Overall Steps:
+## Primary Overall Steps:
 1.  Do vanilla install without installing anything new or any custom setup yet.
 2.  Check for recommended software updates (software app). Reboot
 3.  Check what has been installed already: Delete software you will not use daily. Reboot.
 4.  Proceed with custom setup below.
 
-Secondary Overall Steps:
+## Secondary Overall Steps:
 1.  Set up Mozilla
 2.  Install and set up Chrome (log in)
 3.  Install github cli
@@ -29,8 +29,12 @@ Secondary Overall Steps:
 6.  Set up ssh (e.g. for github)
 7.  Setup gpg (e.g. for github)
 
-Turn off auto-resize when window hits edge ("hot corners"?)
+#### Turn off auto-resize when window hits edge ("hot corners"?)
+```bash
 $ gsettings set org.gnome.mutter edge-tiling false
+```
+Setup shortcuts such as Ctrl+Alt+t for gnome-terminal
+https://docs.fedoraproject.org/en-US/quick-docs/gnome-setting-key-shortcut/ 
 
 Fedora: To Enable additional RPM repositories
 (or use GUI in software tool)
@@ -43,7 +47,7 @@ Tweak Gnome
 	- window titlebars -> minimize, maximize
 
 
-Configure Firefox:
+## Configure Firefox:
 	- Amnesiac (do not remember anything)
 - https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/
 	- set to work on 'private' tabs
@@ -71,13 +75,17 @@ To make sure GPC is turned on in Firefox Nightly, visit https://globalprivacycon
 
 lapce (Rust based)
 https://github.com/lapce/lapce/ 
-https://flathub.org/apps/dev.lapce.lapce 
-
+https://copr.fedorainfracloud.org/coprs/titaniumtown/lapce/ 
+```bash
+$ sudo dnf copr enable titaniumtown/lapce 
+$ sudo dnf install lapce
+```
 helix (Rust based)
-https://docs.helix-editor.com/install.html 
+https://docs.helix-editor.com/install.html
+```bash 
 $ sudo dnf copr enable varlad/helix
 $ sudo dnf install helix
-
+```
 Configure Chrome:
 - in URL bar: chrome://flags/
 - sync nightmare: sync offline, delete cache, delete extensions, delete files in hidden: 
@@ -96,62 +104,72 @@ https://www.howtogeek.com/434380/how-to-change-the-default-font-in-google-docs/
 2. Format -> Paragraph styles -> Options -> Save
 
 Configure Terminal for dark mode Ubuntu 22(Jellyfish)
+```
 setting -> appearance:
 - dark
 - launcher-bar
 set window buttons
 (gnome text editor -> preferences -> fonts -> e.g. oblivion)
-
+```
 
 py venv cheatsheet:
+```bash
 	$ python3 -m venv env; source env/bin/activate
-
+```
 
 gcc cheatsheet:
-Step 1: Compile
+```bash
+# Step 1: Compile
 $ gcc -o executable_file_name source_file_name.c
 
-Step 2: Run
+# Step 2: Run
 $ ./executable_file_name 
-
+```
 
 Fedora Check for Updates, & Restart
+```bash
 $ sudo dnf update
 $ sudo dnf update --refresh
-
+```
 
 Ubuntu: Update Package Lists etc.
+```bash
 $ sudo apt update; sudo apt-get update
 $ sudo apt upgrade
-
+```
 
 https://www.linuxcapable.com/how-to-install-python-on-fedora-linux/ 
 
 Python
 To find out if something is installed or which version, e.g. python3
-method1
+method 1
+```bash
 $ python --version
 $ python3 --version
 
 $ pip --version
+```
 	(will prompt to install if not yet installed after running this version check)
 
 Fedora: dnf
 (venv is usually pre-installed in fedora)
+      ```bash
 $ sudo dnf install python3-pip -y
 $ sudo dnf install python3-venv -y
-
+```
 
 Ubuntu/Debian: apt
+      ```bash
 $ sudo apt install python3-pip
 $ sudo apt install python3-venv
-
+ 	```
 
 
 pip (update)
 	(You may need to do this every time you make a new venv)
+```bash
 	$ python3 -m pip install --upgrade pip
-
+```
 
 python 3.9, 3.8, 3.7, etc.
 	if odd, many DS/ML/AI packages (and AWS installs)
@@ -290,10 +308,36 @@ $ sudo apt-get install -f ./google-chrome-unstable_98.0.4758.9-1_amd64.deb
 Fedora (podman should be installed)
 	$ podman --version 
 
-Docker:
-	to turn off requiring sudo for docker: 
-	$ sudo usermod -a -G docker $USER
 
+
+
+# Postman
+https://snapcraft.io/install/postman/fedora 
+
+1.
+```bash
+$ sudo dnf install snapd
+```
+
+2. Log out and back in again, or restart your system, to ensure snap’s paths are updated correctly. 
+
+3. enable classic snap support
+```bash
+$ sudo ln -s /var/lib/snapd/snap /snap
+```
+
+4. install postman
+```bash
+$ sudo snap install postman
+```
+
+
+
+# Docker:
+	to turn off requiring sudo for docker: 
+	```bash
+	$ sudo usermod -a -G docker $USER
+	```
 	
 Fedora
 	https://docs.docker.com/engine/install/fedora/ 
@@ -360,7 +404,11 @@ https://github.com/cli/cli/blob/trunk/docs/install_linux.md
 $ sudo dnf install gh
 $ gh auth login
 
-	Adding ssh & gpg:
+
+Adding ssh & gpg:
+Run:
+$ ssh-keyscan github.com >> ~/.ssh/known_hosts
+
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent 
 
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account 
