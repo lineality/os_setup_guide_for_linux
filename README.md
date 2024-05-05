@@ -7,6 +7,7 @@ dnf guide: https://www.rootusers.com/25-useful-dnf-command-examples-for-package-
 ssh https://docs.github.com/en/authentication/connecting-to-github-with-ssh   
 gpg https://docs.github.com/en/authentication/managing-commit-signature-verification  
 gpg google: https://www.google.com/linuxrepositories/ 
+$ nano ~/.bash_history
 Cheatsheet:
 ```
 $ dnf clean all
@@ -28,6 +29,8 @@ Snap Note: May have to do a first sudo dnf update and restart for snap to work
 5.  Install editors/ide: helix, Lapce
 6.  Set up ssh (e.g. for github)
 7.  Setup gpg (e.g. for github)
+8.  open page: https://arxiv.org/list/cs/new 
+9.  borkmark news directory ai-ml-ds https://docs.google.com/document/d/1Qpu-zhGbtD1VkhmmLgP9O1Ov_nleeVD4fGLb0ErdH7M/edit 
 
 #### Turn off auto-resize when window hits edge ("hot corners"?)
 ```bash
@@ -57,10 +60,12 @@ Tweak Gnome
 	- no spell checking
 	- no history remembering
 	- no cookie remembering
-	- Dark Mode (browser setting)
+	- Dark Mode browser theme (browser setting)
 	- no auto-fill
-- simple dark mode invert (add this extension I made) 
+- simple dark mode invert (extension I made) 
    https://addons.mozilla.org/en-US/firefox/addon/invert-colors/
+- very good but maybe not safe dark mode invert
+   https://addons.mozilla.org/en-US/firefox/addon/darkreader/ 
 - (add other better if not trust-able dark-mode extension)
 - add bookmark for news links
    https://docs.google.com/document/d/1JR6VkpgPAD8yd1xZk1T1gj5asz3ka5q0K-_ALbyCOto/edit 
@@ -73,8 +78,140 @@ Tweak Gnome
 https://blog.mozilla.org/netpolicy/2021/10/28/implementing-global-privacy-control/ 
 To make sure GPC is turned on in Firefox Nightly, visit https://globalprivacycontrol.org/ . The website will flag if the GPC signal has been detected.
 
+
+
+
+
+
+
+
+
+
+
+
+
 lapce (Rust based)
 https://github.com/lapce/lapce/ 
+
+Maybe better way to install...build in cargo
+https://github.com/lapce/lapce/blob/master/docs/building-from-source.md 
+
+
+## Ubuntu:
+1. follow instructions here:
+https://github.com/lapce/lapce/blob/master/docs/building-from-source.md 
+
+```
+cargo build --release
+```
+
+2. Follow instruction below to set path to lapce, where path to 
+lapce is like: 
+```
+home/YOURNAME/lapce/target/release/lapce
+```
+
+3. Create a symbolic link:
+   - Open a terminal and run the following command to create a symbolic link from the executable to the chosen directory:
+     ```bash
+     ln -s home/YOURNAME/lapce/target/release/lapce ~/.local/bin/
+     ```
+
+4. Add the directory to PATH (if necessary):
+     ```bash
+     export PATH="home/YOURNAME/lapce/target/release/lapce:$PATH"
+     ```
+
+5. Refresh the shell:
+   - Run the following command to reload the shell configuration:
+     ```
+     source ~/.bashrc
+     ```
+
+6. Now you can call "lapce ." or "lapce --version" from cli
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Fedora:
+follow instructions here:
+https://github.com/lapce/lapce/blob/master/docs/building-from-source.md 
+modified here to add perl-core
+```bash
+sudo dnf install cargo clang libxkbcommon-x11-devel libxcb-devel vulkan-loader-devel wayland-devel perl-File-Compare perl-FindBin perl-core
+```
+
+```bash
+git clone https://github.com/lapce/lapce.git ~/lapce
+```
+
+```bash
+cd lapce
+```
+
+
+this works
+```bash
+cargo build --release
+```
+
+Follow instructions below to set path to lapce, where path to 
+lapce is like: 
+```
+home/YOURNAME/lapce/target/release/lapce
+```
+
+
+
+2.1  Install Perl (from official fedora source) to avoid a build-fail
+
+https://developer.fedoraproject.org/tech/languages/perl/perl-installation.html
+```bash
+$ sudo dnf install perl-core
+sudo dnf install perl-core
+```
+
+
+
+2.2 Create the ~/.local/bin directory
+```bash
+mkdir -p ~/.local/bin
+```
+
+2.3  Create a symbolic link:
+
+   - Open a terminal and run the following command to create a symbolic link from the executable to the chosen directory:
+```bash
+ln -s /home/YOURNAME/lapce/target/release/lapce ~/.local/bin/lapce
+```
+
+2.4  Add the directory to PATH (if necessary):
+```bash
+export PATH="$PATH:$HOME/.local/bin"
+```
+
+2.5  Refresh the shell:
+   - Run the following command to reload the shell configuration:
+     ```
+     source ~/.bashrc
+     ```
+
+Now you can call "lapce ." or "lapce --version" from cli
+
+
 https://copr.fedorainfracloud.org/coprs/titaniumtown/lapce/ 
 ```bash
 $ sudo dnf copr enable titaniumtown/lapce 
@@ -83,9 +220,9 @@ $ sudo dnf install lapce
 helix (Rust based)
 https://docs.helix-editor.com/install.html
 ```bash 
-$ sudo dnf copr enable varlad/helix
 $ sudo dnf install helix
 ```
+
 Configure Chrome:
 - in URL bar: chrome://flags/
 - sync nightmare: sync offline, delete cache, delete extensions, delete files in hidden: 
@@ -131,6 +268,9 @@ Fedora Check for Updates, & Restart
 $ sudo dnf update
 $ sudo dnf update --refresh
 ```
+
+## Ubuntu
+Note: for ubuntu, log in so you can actually get updates. A shame.
 
 Ubuntu: Update Package Lists etc.
 ```bash
@@ -346,11 +486,16 @@ Fedora
 	https://docs.docker.com/engine/install/ubuntu/
 
 	
+	SNAP Docker is HORRIBLE 
+	do NOT use it. follow instructions from 
+	https://docs.docker.com/engine/install/ubuntu/
+
+
+
 
 Google Colab Setup:
 
-1.
-settings: darkmode
+1. settings: darkmode
 chrome://flags/  (in url bar)
 search for: dark mode
 
@@ -389,15 +534,6 @@ Install Packages:
 - formatter: python-black
 
 
-
-
-
-
-
-
-
-
-
 github cli
 https://github.com/cli/cli/blob/trunk/docs/install_linux.md 
 https://github.com/cli/cli/blob/trunk/docs/install_linux.md 
@@ -405,7 +541,7 @@ $ sudo dnf install gh
 $ gh auth login
 
 
-Adding ssh & gpg:
+Adding ssh:
 Run:
 $ ssh-keyscan github.com >> ~/.ssh/known_hosts
 
@@ -444,7 +580,6 @@ Error "The authenticity of host 'github.com' can't be established. RSA key finge
 
 
 
-
 GPG:
 1. https://github.com/settings/keys 
 ssh https://docs.github.com/en/authentication/connecting-to-github-with-ssh 
@@ -471,6 +606,8 @@ $ git config --global user.email "your_email@example.com"
  Test: (in a github repo directory)
 $ eval $(gpg-agent --daemon)
 $ GIT_TRACE=1 git commit -S -m "test"
+
+
 
 
 
@@ -1030,22 +1167,73 @@ $ podman run -it -p 8888:8888 tensorflow/tensorflow:latest-jupyter  # Start Jupy
 
 # Kill Process
 
-To see what process is active
+## Kill PID
+- https://github.com/lineality/find_pid_listening_at_port
+
+###  list what processes are listening at port (user your port number below)
+```bash
+$ sudo lsof -n -i :8080 | grep LISTEN
+$ kill -9 <PID #####>
 ```
-	[bash]
-	$ sudo nethogs
-	$ top
+
+To see what process is active [bash]
+```bash
+$ sudo nethogs
+$ top
 ```
 
 End process by <processID>(PID) with:
-```
-	[bash]
+```bash
 $ kill -9 <processID>(PID)
 
 Or
 
 $ kill -SIGKILL <processID>(PID)
 ```
+
+
+
+#### end_sigkill_process_bash_cheatsheet
+
+# Kill Process
+
+## To see what process is active [bash]
+```bash
+$ sudo nethogs
+$ top
+```
+In Top:
+- type 'h'
+- Kill process: Scroll with arrows until your target process is at the top of the list. Type 'k'. 
+
+## End process by <processID>(PID) with:
+- https://github.com/lineality/find_pid_listening_at_port
+
+### List what processes are listening at port (user your port number below)
+```bash
+$ sudo lsof -n -i :8080 | grep LISTEN
+```
+#### Example output: In this example '12345' is the process-ID (PID)
+```
+python3 12345 username    4u  IPv4 645737      0t0  TCP 127.0.0.1:rfe (LISTEN)
+```
+
+
+## End process by <processID>(PID) with:
+```bash
+$ kill -9 <processID>(PID)
+```
+or
+```bash
+$ kill -SIGKILL <processID>(PID)
+```
+#### For Example:
+```bash
+$ kill -SIGKILL 12345
+```
+
+
+
 
 
 May you, may we, may ___{noun}, become proficient
