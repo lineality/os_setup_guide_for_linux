@@ -1,6 +1,8 @@
-# Quick OS Setup Software Setup for new OS install: Fedora, Ubuntu, Alpine
+# Quick OS Setup 
+## Software Setup for new OS install: Fedora, Ubuntu, Alpine
+share version:https://docs.google.com/document/d/1-JLsoFJy91HJ5W6A9wLrq2F1Q_mLOO2lgBIcgqJFAyw/ 
 
-IDE config https://docs.google.com/document/d/1dZJI20D7uIknT1pdlTSmlHH1WPYdVhs2PSUyH1qdnUo/ 
+IDE config https://docs.google.com/document/d/1-iQHF3Ns8yX411bvXzLadFzhhH1X3HcvPvW-jpVImiE/  
 Fedora Release Schedules: https://fedorapeople.org/groups/schedule/ 
 dnf guide: https://www.rootusers.com/25-useful-dnf-command-examples-for-package-management-in-linux/ 
        https://linuxize.com/post/cp-command-in-linux/ 
@@ -31,6 +33,12 @@ Snap Note: May have to do a first sudo dnf update and restart for snap to work
 7.  Setup gpg (e.g. for github)
 8.  open page: https://arxiv.org/list/cs/new 
 9.  borkmark news directory ai-ml-ds https://docs.google.com/document/d/1Qpu-zhGbtD1VkhmmLgP9O1Ov_nleeVD4fGLb0ErdH7M/edit 
+
+####  Harden git
+```bash
+$ git config --global core.symlinks false
+```
+
 
 #### Turn off auto-resize when window hits edge ("hot corners"?)
 ```bash
@@ -88,16 +96,27 @@ To make sure GPC is turned on in Firefox Nightly, visit https://globalprivacycon
 
 
 
+## Google GPG/PGP
+- Manually install google gpg keys
+- https://dl.google.com/linux/linux_signing_key.pub  
+positories/
+- optional: run these in /home/YOUR_COMPUTER_NAME/.gnupg
+- run:
+```bash
+wget https://dl.google.com/linux/linux_signing_key.pub
+sudo rpm --import linux_signing_key.pub
+```
+(some keys may be expired, but others may work)
 
 
-lapce (Rust based)
+# lapce (Rust based)
 https://github.com/lapce/lapce/ 
 
 Maybe better way to install...build in cargo
 https://github.com/lapce/lapce/blob/master/docs/building-from-source.md 
 
 
-## Ubuntu:
+## Ubuntu: lapce
 1. follow instructions here:
 https://github.com/lapce/lapce/blob/master/docs/building-from-source.md 
 
@@ -146,7 +165,7 @@ home/YOURNAME/lapce/target/release/lapce
 
 
 
-## Fedora:
+## Fedora: lapce
 follow instructions here:
 https://github.com/lapce/lapce/blob/master/docs/building-from-source.md 
 modified here to add perl-core
@@ -542,19 +561,20 @@ $ gh auth login
 
 
 Adding ssh:
-Run:
-$ ssh-keyscan github.com >> ~/.ssh/known_hosts
-
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent 
 
 https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account 
 
+Run: update connection to github
+$ ssh-keyscan github.com > githubKey
+$ ssh-keyscan github.com >> ~/.ssh/known_hosts
+
 $ ssh-keygen -t ed25519 -C "your_email@example.com"
 
 > Your public key has been saved in:
-/home/YOURNAME/.ssh/id_ed25519.pub
+/home/YOUR_computer_NAME/.ssh/id_ed25519.pub
 
-$ ssh-add /home/YOURNAME/.ssh/id_ed25519
+$ ssh-add /home/YOUR_computer_NAME/.ssh/id_ed25519
 
 $ cat ~/.ssh/id_ed25519.pub
 
@@ -562,8 +582,7 @@ via githb website:
 add these output (2 lines, key and email) to github
 settings -> ssh keys -> add
 
-Run:
-$ ssh-keyscan github.com >> ~/.ssh/known_hosts
+
 
 	make sure known hosts file exists and is named correctly
 
@@ -584,8 +603,14 @@ GPG:
 1. https://github.com/settings/keys 
 ssh https://docs.github.com/en/authentication/connecting-to-github-with-ssh 
 gpg https://docs.github.com/en/authentication/managing-commit-signature-verification 
+$ gpgconf --kill gpg-agent
 
-$ gpg --full-generate-key
+### To see if you have old keys, and to remove them:
+$ gpg --list-secret-keys --keyid-format=long
+$ gpg --delete-secret-keys <key-id>
+
+$ gpg --full-generate-key 
+
 follow defaults
 
 $ gpg --list-secret-keys --keyid-format=long
@@ -601,7 +626,8 @@ $ git config --global user.signingkey YOURKEYID
 $ git config --global commit.gpgsign true
 
 $ gpg --list-secret-keys --keyid-format LONG
-$ git config --global user.email "your_email@example.com"
+$ git config --global user.email "your_GITHUBemail@example.com"
+$ git config --global user.name "YOUR_GITHUB_NAME"
 
  Test: (in a github repo directory)
 $ eval $(gpg-agent --daemon)
@@ -1260,5 +1286,111 @@ Function and variable names must be clear and must NOT COLLIDE (e.g. make_step()
 
 Only use terms that have clear meaning. Specifically:
 Only use the words 'complex' or 'complexity' if they are jargon such as Big-O 'computational complexity' or dynamical systems maths.
+
+
+
+
+# nodejs, React.js, NPM, NPX
+React.js is a JavaScript library that's available as a package on the npm (Node Package Manager) registry. This means that you can use npm to install React.js and other dependencies for a coding project on your local development machine.
+
+Steps for a new project:
+
+1. Install Node.js and NPM:
+
+Node.js is a JavaScript runtime that allows you to run JavaScript on the server. NPM is a package manager for Node.js.
+
+naming-issue:
+you install nodejs but you check the version of: node
+
+```bash
+node --version
+```
+
+this may prompt to install one or both
+or install them separately:
+
+```bash
+sudo dnf install nodejs
+sudo dnf install npm
+```
+
+```bash
+npm --version
+```
+
+2. make a React project
+```bash
+npx create-react-app my-app
+```
+Steps for an existing project:
+
+1. Clone project repository
+```bash
+git clone <repository-url>
+```
+
+2. enter working directory
+```bash
+cd <project-directory>
+```
+
+3. Install npm dependencies
+```bash
+npm install
+```
+
+
+4. Get or Make .env file: A Chain of unclear names and syntax:
+
+```
+LIVER_HOST=cloudywindy
+ONIONS_USER=cups
+ROOK_SPAM=bananas
+```
+
+
+
+
+Notes:
+This line in the code takes a standard .env and loads it all:
+```js
+const dotenv = require('dotenv').config();
+```
+where dotenv is a dotenv_dict constant
+
+from this you look up values
+```js
+dotenv.parsed.DICT_KEY
+```
+
+Or you can individually get values from env (how do they get there?)
+```js
+const port = process.env.PORT || 8080;
+```
+It appears to create a lookup dictionary of .env key values
+that are accessed through: process.env
+(not "dotenv")
+
+This line extracts just one value:
+```js
+variable_name = process.env.THING_HERE;
+```
+e.g.
+```js
+secret_shoes = process.env.LOAFERS;
+```
+
+
+5. Start server
+
+Run the command specified in the project's documentation or the package.json file to start the server. This command might vary depending on the project's configuration. It could be something like npm start or npm run dev.
+
+```bash
+npm start 
+```
+or 
+npm run dev
+
+
 
 
